@@ -19,7 +19,7 @@ exports.create = (req, res) => {
     ISBN: req.body.ISBN,
     name: req.body.name,
     subject: req.body.subject,
-    description: req.body.description,
+    auther: req.body.auther,
     copyNo: req.body.copyNo
     
   };
