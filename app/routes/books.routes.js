@@ -20,7 +20,7 @@ module.exports = app => {
     // Delete a Book with id
     router.delete("/:id", books.delete);
   
-    // Create a new Book
+    // Delete All Books a new Book
     router.delete("/", books.deleteAll);
 
     // Retrieve all Books order by name asc
