@@ -11,17 +11,25 @@ module.exports = app => {
   
    
   
-    // Retrieve a single Tutorial with id
+    // Retrieve a single Book with id
     router.get("/:id", books.findOne);
   
-    // Update a Tutorial with id
+    // Update a Book with id
     router.put("/:id", books.update);
   
-    // Delete a Tutorial with id
+    // Delete a Book with id
     router.delete("/:id", books.delete);
   
-    // Create a new Tutorial
+    // Create a new Book
     router.delete("/", books.deleteAll);
+
+    // Retrieve all Books order by name asc
+    router.get("/name/asc", books.findAllOrderByNameAsc);
+
+
+    // Retrieve all Books order by copyNo DESC
+    router.get("/copyNo/desc", books.findAllOrderByCopyNoDesc);
+
   
     app.use('/api/books', router);
   };
