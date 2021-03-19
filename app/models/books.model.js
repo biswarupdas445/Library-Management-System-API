@@ -10,7 +10,7 @@ module.exports = (sequelize, Sequelize) => {
       subject: {
         type: Sequelize.STRING
       },
-      description: {
+      auther: {
         type: Sequelize.STRING
       },
       copyNo: {

@@ -44,12 +44,20 @@ exports.findAll = (req, res) => {
 
 
     //Search by Name
-    const name = req.query.name;
-  var condition = name ? { name: { [Op.iLike]: `%${name}%` } } : null;
+    if(req.query.name)
+    {
+      const name = req.query.name;
+      var condition = name ? { name: { [Op.iLike]: `%${name}%` } } : null;
+    }
+  
 
   //Filter by Subject
-  const subject = req.query.subject;
-  var condition = subject ? { subject: { [Op.iLike]: `%${subject}%` } } : null;
+  if(req.query.subject)
+  {
+    const subject = req.query.subject;
+    var condition = subject ? { subject: { [Op.iLike]: `%${subject}%` } } : null;
+  }
+  
 
   Books.findAll({ where: condition })
     .then(data => {
