@@ -164,3 +164,48 @@ exports.deleteAll = (req, res) => {
   
 };
 
+
+
+// Retrieve all Books from the database Order by name ASC.
+exports.findAllOrderByNameAsc = (req, res) => {
+
+  Books.findAll({
+    order: [
+      ['name', 'ASC']
+    ]
+
+  }).then(data => {
+    res.send(data);
+  })
+  .catch(err => {
+    res.status(500).send({
+      message:
+        err.message || "Some error occurred while retrieving Books Order by Name ASC."
+    });
+  });
+
+
+
+
+}
+
+// Retrieve all Books from the database Order by copyNo DESC.
+exports.findAllOrderByCopyNoDesc = (req, res) => {
+
+  Books.findAll({
+    order: [
+      ['copyNo', 'DESC']
+    ]
+
+  }).then(data => {
+    res.send(data);
+  })
+  .catch(err => {
+    res.status(500).send({
+      message:
+        err.message || "Some error occurred while retrieving Books Order by Copy No. DESC."
+    });
+  });
+
+
+}
