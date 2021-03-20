@@ -2,7 +2,7 @@ const db = require("../models");
 const Books = db.books;
 const Op = db.Sequelize.Op;
 
-// Create and Save a new Tutorial
+// Create and Save a new Book
 exports.create = (req, res) => {
 
 

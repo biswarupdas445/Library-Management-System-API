@@ -1,18 +1,6 @@
 version: "3"
 services:
-  lsma-app:
-    container_name: LMSA-APP
-    build:
-      context: .
-      dockerfile: .Dockerfile
-    depends_on:
-      - postgres
-    environment:
-      DATABASE_URL: postgres://postgres:raju.123@postgres:5432/LMSA-DB
-      NODE_ENV: development
-      PORT: 8080
-    ports:
-      - "8080:8080"
+  
   postgres:
     container_name: postgres
     image: postgres:10.16
@@ -20,7 +8,7 @@ services:
       - "5432:5432"
     volumes: 
       - ./postgresdata:/var/lib/postgresql/data
-      - ./src/migrations/dbinit.sql:/docker-entrypoint-initdb.d/dbinit.sql
+      - .dbinit.sql:/docker-entrypoint-initdb.d/dbinit.sql
     restart: always
     environment:
       POSTGRES_USER: postgres
@@ -35,11 +23,25 @@ services:
       PGADMIN_DEFAULT_PASSWORD: raju.123
       PGADMIN_LISTEN_PORT: 80
     ports:
-      - "80:80"
+      - "5050:80"
     volumes:
       - pgadmin-data:/var/lib/pgadmin
     depends_on:
       - postgres
+
+  lsma-app:
+    container_name: LMSA-APP
+    build:
+      context: .
+      dockerfile: .Dockerfile
+    depends_on:
+      - postgres
+    environment:
+      DATABASE_URL: postgres://postgres:raju.123@my-server:5432/LMSA-DB
+      NODE_ENV: development
+      PORT: 8080
+    ports:
+      - "8080:8080"
 volumes:
     db-data:
     pgadmin-data:
