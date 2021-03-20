@@ -32,6 +32,7 @@ app.get("/", (req, res) => {
 
 // include routes in server.js
 require("./app/routes/books.routes")(app);
+require("./app/routes/users.routes")(app);
 
 
 // set port, listen for requests
