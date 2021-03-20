@@ -47,14 +47,14 @@ exports.findAll = (req, res) => {
     //Search by F_Name
     if(req.query.f_name)
     {
-      const name = req.query.f_name;
+      const f_name = req.query.f_name;
       var condition = f_name ? { f_name: { [Op.iLike]: `%${f_name}%` } } : null;
     }
 
     //Search by L_Name
     if(req.query.l_name)
     {
-      const name = req.query.l_name;
+      const l_name = req.query.l_name;
       var condition = l_name ? { l_name: { [Op.iLike]: `%${l_name}%` } } : null;
     }
   
