@@ -1,6 +1,8 @@
 const db = require("../models");
 const Users = db.users;
+const Role = db.role;
 const Op = db.Sequelize.Op;
+var bcrypt = require("bcryptjs");
 
 // Create and Save a new User
 exports.create = (req, res) => {
@@ -17,7 +19,7 @@ exports.create = (req, res) => {
   // Create a User
   const users = {
     email: req.body.email,
-    psw: req.body.psw,
+    psw: bcrypt.hashSync(req.body.psw, 8),
     name: req.body.name,
     dept: req.body.dept
     
@@ -25,9 +27,26 @@ exports.create = (req, res) => {
 
   // Save User in the database
   Users.create(users)
-    .then(data => {
-      res.send(data);
-    })
+  .then(user => {
+    if (req.body.roles) {
+      Role.findAll({
+        where: {
+          name: {
+            [Op.or]: req.body.roles
+          }
+        }
+      }).then(roles => {
+        user.setRoles(roles).then(() => {
+          res.send({ message: "User was Created successfully!" });
+        });
+      });
+    } else {
+      // user role = 2
+      user.setRoles([2]).then(() => {
+        res.send({ message: "User was Created successfully!" });
+      });
+    }
+  })
     .catch(err => {
       res.status(500).send({
         message:
@@ -58,10 +77,46 @@ exports.findAll = (req, res) => {
   }
   
 
-  Users.findAll({ where: condition })
-    .then(data => {
+  Users.findAll({ 
+    where: condition,
+    include: [
+      {
+        model: Role
+      }
+    ]
+
+  }).then(data => {
+
+    /*  const resObj = data.map(user => {
+
+        //tidy up the user data
+        return Object.assign(
+          {},
+          {
+            id: user.id,
+            email: user.email,
+            psw: user.psw,
+            name: user.name,
+            dept: user.dept,
+            roles: user.Role.map(roles => {
+              //tidy up the role data
+              return Object.assign(
+                {},
+                {
+            
+                  Role_name: roles.name
+
+                })
+
+          })
+
+      }) */
       res.send(data);
-    })
+      
+    //});
+    //res.json(resObj)
+  })
+
     .catch(err => {
       res.status(500).send({
         message:
@@ -95,7 +150,8 @@ exports.update = (req, res) => {
     const id = req.params.id;
 
   Users.update(req.body, {
-    where: { id: id }
+    where: { id: id },
+    
   })
     .then(num => {
       if (num == 1) {
@@ -113,6 +169,32 @@ exports.update = (req, res) => {
         message: "Error updating User with id=" + id
       });
     });
+
+    if(req.body.psw)
+    {
+      const users = {
+        psw: bcrypt.hashSync(req.body.psw, 8)
+        
+      };
+      Users.update(users, {
+        where: { id: id }
+      })
+      .then(num => {
+        if (num == 1) {
+          res.send({
+            message: "User Password was updated successfully." //Response Not Work 
+          });                                                  //Single function, Single responce
+        }
+      })
+      .catch(err => {
+        res.status(500).send({
+          message: "Error updating User Password with id=" + id
+        });
+      });
+
+
+
+    }
   
 };
 

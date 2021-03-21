@@ -24,6 +24,19 @@ db.sequelize.sync();
 
 
 
+const Role = db.role;
+
+
+
+
+//In development, you may need to drop existing tables and re-sync database. Just use force: true
+db.sequelize.sync({ force: true }).then(() => {
+  console.log("Drop and re-sync db.");
+  initial(); // Call initial function to create 3 rows in database
+});
+
+
+
 // simple route
 app.get("/", (req, res) => {
   res.json({ message: "Welcome to Api Application." });
@@ -40,3 +53,24 @@ const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}.`);
 });
+
+
+
+
+//initial() function helps us to create 3 rows in database
+function initial() {
+  Role.create({
+    id: 1,
+    name: "Librarian"
+  });
+ 
+  Role.create({
+    id: 2,
+    name: "Student"
+  });
+ 
+  Role.create({
+    id: 3,
+    name: "Faculty"
+  });
+}

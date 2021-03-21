@@ -22,11 +22,27 @@ db.sequelize = sequelize;
 //Database Tables
 db.books = require("./books.model.js")(sequelize, Sequelize);
 db.users = require("./users.model.js")(sequelize, Sequelize);
+db.role = require("../models/role.model.js")(sequelize, Sequelize);
+
+
+//Relation Table
+db.role.belongsToMany(db.users, {
+  through: "user_roles",
+  foreignKey: "roleId",
+  otherKey: "usesId"
+});
+db.users.belongsToMany(db.role, {
+  through: "user_roles",
+  foreignKey: "usersId",
+  otherKey: "roleId"
+});
+
+db.ROLES = ["Librarian", "Student", "Faculty"];
+
+
+
+
 
 module.exports = db;
 
 
-//In development, you may need to drop existing tables and re-sync database. Just use force: true
-db.sequelize.sync({ force: true }).then(() => {
-    console.log("Drop and re-sync db.");
-  });
