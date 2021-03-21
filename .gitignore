@@ -108,5 +108,5 @@ dist
 .tern-port
 
 
-node_modules
-postgresdata
+node_modules/
+postgresdata/
