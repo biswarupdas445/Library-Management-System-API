@@ -7,7 +7,7 @@ exports.create = (req, res) => {
 
 
  // Validate request
- if (!req.body.f_name || !req.body.l_name) {
+ if (!req.body.name) {
     res.status(400).send({
       message: "Content can not be empty!"
     });
@@ -16,11 +16,9 @@ exports.create = (req, res) => {
 
   // Create a User
   const users = {
-    email_id: req.body.email_id,
+    email: req.body.email,
     psw: req.body.psw,
-    f_name: req.body.f_name,
-    l_name: req.body.l_name,
-    role: req.body.role,
+    name: req.body.name,
     dept: req.body.dept
     
   };
@@ -40,22 +38,15 @@ exports.create = (req, res) => {
   
 };
 
-// Retrieve all Books from the database.
+// Retrieve all Users from the database.
 exports.findAll = (req, res) => {
 
 
-    //Search by F_Name
-    if(req.query.f_name)
+    //Search by Name
+    if(req.query.name)
     {
-      const f_name = req.query.f_name;
-      var condition = f_name ? { f_name: { [Op.iLike]: `%${f_name}%` } } : null;
-    }
-
-    //Search by L_Name
-    if(req.query.l_name)
-    {
-      const l_name = req.query.l_name;
-      var condition = l_name ? { l_name: { [Op.iLike]: `%${l_name}%` } } : null;
+      const name = req.query.name;
+      var condition = name ? { name: { [Op.iLike]: `%${name}%` } } : null;
     }
   
 
@@ -63,7 +54,7 @@ exports.findAll = (req, res) => {
   if(req.query.role)
   {
     const role = req.query.role;
-    var condition = role ? { role: { [Op.iLike]: `%${role}%` } } : null;
+    var condition = role ? { role: { [Op.iLike]: `%${role}%` } } : null;  //Have to Check
   }
   
 
@@ -179,7 +170,7 @@ exports.findAllOrderByNameAsc = (req, res) => {
 
     Users.findAll({
     order: [
-      ['f_name', 'ASC']
+      ['name', 'ASC']
     ]
 
   }).then(data => {

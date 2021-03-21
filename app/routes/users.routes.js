@@ -27,7 +27,7 @@ module.exports = app => {
     router.get("/name/asc", users.findAllOrderByNameAsc);
 
 
-    // Retrieve all Books order by createdAt DESC
+    // Retrieve all Users order by createdAt DESC
     router.get("/reg/desc", users.findAllOrderBycreatedAtDesc);
 
   
