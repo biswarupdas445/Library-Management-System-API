@@ -1,6 +1,7 @@
 const db = require("../models");
 const Users = db.users;
 const Role = db.role;
+const User_Roles =db.user_roles;
 const Op = db.Sequelize.Op;
 var bcrypt = require("bcryptjs");
 
@@ -87,7 +88,7 @@ exports.findAll = (req, res) => {
 
   }).then(data => {
 
-    /*  const resObj = data.map(user => {
+      const resObj = data.map(user => {
 
         //tidy up the user data
         return Object.assign(
@@ -98,7 +99,7 @@ exports.findAll = (req, res) => {
             psw: user.psw,
             name: user.name,
             dept: user.dept,
-            roles: user.Role.map(roles => {
+            roles: user.roles.map(roles => {
               //tidy up the role data
               return Object.assign(
                 {},
@@ -108,13 +109,12 @@ exports.findAll = (req, res) => {
 
                 })
 
-          })
+            })
 
-      }) */
-      res.send(data);
+        }) 
       
-    //});
-    //res.json(resObj)
+      });
+      res.json(resObj)
   })
 
     .catch(err => {
@@ -133,7 +133,35 @@ exports.findOne = (req, res) => {
 
   Users.findByPk(id)
     .then(data => {
-      res.send(data);
+      const resObj = data.map(user => {
+
+        //tidy up the user data
+        return Object.assign(
+          {},
+          {
+            id: user.id,
+            email: user.email,
+            psw: user.psw,
+            name: user.name,
+            dept: user.dept,
+            roles: user.roles.map(roles => {
+              //tidy up the role data
+              return Object.assign(
+                {},
+                {
+            
+                  Role_name: roles.name
+
+                })
+
+          })
+
+        }) 
+      
+      });
+      res.json(resObj)
+
+      //res.send(data);
     })
     .catch(err => {
       res.status(500).send({
@@ -148,13 +176,21 @@ exports.update = (req, res) => {
 
 
     const id = req.params.id;
-
+    //const roles = req.body.roles;
+/*
   Users.update(req.body, {
     where: { id: id },
+    include: [
+      {
+        model: Role
+      }
+    ],
+    
     
   })
-    .then(num => {
+  .then(num => {
       if (num == 1) {
+
         res.send({
           message: "User was updated successfully."
         });
@@ -170,6 +206,8 @@ exports.update = (req, res) => {
       });
     });
 
+
+    //User Password Update
     if(req.body.psw)
     {
       const users = {
@@ -194,6 +232,40 @@ exports.update = (req, res) => {
 
 
 
+    } */
+    //User Role Update
+    if (req.body.roles) {
+      
+      Role.findAll({
+        attributes: ['id'],
+        where: {
+          name: {
+            [Op.or]: req.body.roles
+          }
+        }
+      }).then(data => {
+        res.send(data[0]);   })
+      /*  const temp = {
+          roleId: data.id
+        };
+        User_Roles.update(temp, {
+          where: { usersId: id }
+        })
+        .then(num => {
+          if (num == 1) {
+            res.send({
+              message: "User Role was updated successfully." 
+            });                                                 
+          }
+        })
+        .catch(err => {
+          res.status(500).send({
+            message: "Error updating User Role with id=" + id
+          });
+        });
+  
+
+      });   */
     }
   
 };
