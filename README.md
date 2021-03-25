@@ -57,12 +57,21 @@ A Library Management System Rest API Nodejs Express Server.
 - `createdAt` timestamp with timezone
 - `updatedAt` timestamp with timezone
 
+#### Entity Relationships
+
+Entities | Relationship
+--- | ---
+Users : roles | n : n through user_roles
+lot : gateway | 1 : 1
+bay : sensor | 1 : 1
+sensor : status | 1 : n
 
 
 
 
 
 ### Relation Between Tables
+
 
 ## Installation
 
