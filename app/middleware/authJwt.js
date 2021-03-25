@@ -47,12 +47,16 @@ isFacultyOrStudent = (req, res, next) => {
   Users.findByPk(req.userId).then(user => {
     user.getRoles().then(roles => {
       for (let i = 0; i < roles.length; i++) {
-        if (roles[i].name === "Faculty") {
+
+        
+        if (roles[i].name == "Faculty") {
+          console.log(roles[i].name);
           next();
           return;
         }
 
         if (roles[i].name === "Student") {
+          console.log(roles[i].name);
           next();
           return;
         }
@@ -68,6 +72,6 @@ isFacultyOrStudent = (req, res, next) => {
 const authJwt = {
   verifyToken: verifyToken,
   isLibrarian: isLibrarian,
-  isFacultyOrStudent: isFacultyOrStudent
+  isFacultyOrStudent: isFacultyOrStudent,
 };
 module.exports = authJwt;

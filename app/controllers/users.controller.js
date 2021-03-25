@@ -1,7 +1,7 @@
 const db = require("../models");
 const Users = db.users;
 const Role = db.role;
-const User_Roles =db.user_roles;
+const User_Roles = db.user_roles;
 const Op = db.Sequelize.Op;
 var bcrypt = require("bcryptjs");
 
@@ -131,10 +131,20 @@ exports.findOne = (req, res) => {
 
     const id = req.params.id;
 
-  Users.findByPk(id)
-    .then(data => {
-      const resObj = data.map(user => {
-
+  Users.findAll({
+    where: {
+      id: {
+        [Op.eq]: id
+      }
+    },
+    include: [
+      {
+        model: Role
+      }
+    ]
+  })
+    .then((data) => {
+      const resObj = data.map((user) => {
         //tidy up the user data
         return Object.assign(
           {},
@@ -144,28 +154,25 @@ exports.findOne = (req, res) => {
             psw: user.psw,
             name: user.name,
             dept: user.dept,
-            roles: user.roles.map(roles => {
+            roles: user.roles.map((roles) => {
               //tidy up the role data
               return Object.assign(
                 {},
                 {
-            
-                  Role_name: roles.name
-
-                })
-
-          })
-
-        }) 
-      
+                  Role_name: roles.name,
+                }
+              );
+            }),
+          }
+        );
       });
-      res.json(resObj)
+      res.json(resObj);
 
       //res.send(data);
     })
-    .catch(err => {
+    .catch((err) => {
       res.status(500).send({
-        message: "Error retrieving User with id=" + id
+        message: "Error retrieving User with id=" + id,
       });
     });
   
@@ -177,7 +184,7 @@ exports.update = (req, res) => {
 
     const id = req.params.id;
     //const roles = req.body.roles;
-/*
+
   Users.update(req.body, {
     where: { id: id },
     include: [
@@ -232,26 +239,37 @@ exports.update = (req, res) => {
 
 
 
-    } */
+    } 
     //User Role Update
-    if (req.body.roles) {
-      
+  /*  if (req.body.roles) {
       Role.findAll({
-        attributes: ['id'],
+        attributes: ["id"],
         where: {
           name: {
-            [Op.or]: req.body.roles
-          }
-        }
-      }).then(data => {
-        res.send(data[0]);   })
-      /*  const temp = {
-          roleId: data.id
+            [Op.or]: req.body.roles,
+          },
+        },
+        //raw: true
+      }).then((data) => {
+        //var obj = JSON.parse(data);
+        console.log(data[0].id);
+        //  res.send({ "data": data[0].id });
+        //  });
+        const da = parseInt(data[0].id);
+        console.log(typeof da);
+        const temp = {
+          roleId: da
         };
+      //  console.log(temp);
         User_Roles.update(temp, {
-          where: { usersId: id }
-        })
-        .then(num => {
+          where: { usersId: id },
+        }).catch((err) => {
+          console.err(err)
+          res.status(500).send({
+            message: "Error updating User Role with id=" + id,
+          });
+        });
+      /*  .then(num => {
           if (num == 1) {
             res.send({
               message: "User Role was updated successfully." 
@@ -262,11 +280,11 @@ exports.update = (req, res) => {
           res.status(500).send({
             message: "Error updating User Role with id=" + id
           });
-        });
+        }); 
   
 
-      });   */
-    }
+      });   
+    } */
   
 };
 
@@ -319,23 +337,47 @@ exports.deleteAll = (req, res) => {
 
 
 
-// Retrieve all Users from the database Order by f_name ASC.
+// Retrieve all Users from the database Order by Name ASC.
 exports.findAllOrderByNameAsc = (req, res) => {
 
     Users.findAll({
-    order: [
-      ['name', 'ASC']
-    ]
+      order: [["name", "ASC"]],
+    })
+      .then((data) => {
+       
+      /*  const resObj = data.map((user) => {
+          //tidy up the user data
+          return Object.assign(
+            {},
+            {
+              id: user.id,
+              email: user.email,
+              psw: user.psw,
+              name: user.name,
+              dept: user.dept,
+              roles: user.roles.map((roles) => {
+                //tidy up the role data
+                return Object.assign(
+                  {},
+                  {
+                    Role_name: roles.name,
+                  }
+                );
+              }),
+            }
+          );  
+        });   */
+      //  res.json(newObj); 
 
-  }).then(data => {
-    res.send(data);
-  })
-  .catch(err => {
-    res.status(500).send({
-      message:
-        err.message || "Some error occurred while retrieving Users Order by First Name ASC."
-    });
-  });
+        res.send(data);
+      })
+      .catch((err) => {
+        res.status(500).send({
+          message:
+            err.message ||
+            "Some error occurred while retrieving Users Order by First Name ASC.",
+        });
+      });
 
 
 
@@ -346,19 +388,57 @@ exports.findAllOrderByNameAsc = (req, res) => {
 exports.findAllOrderBycreatedAtDesc = (req, res) => {
 
   Users.findAll({
-    order: [
-      ['createdAt', 'DESC']
-    ]
-
-  }).then(data => {
-    res.send(data);
+    order: [["createdAt", "DESC"]],
   })
-  .catch(err => {
-    res.status(500).send({
-      message:
-        err.message || "Some error occurred while retrieving Users Order by createdAt DESC."
+    .then((data) => {
+    //  const resObj = data.map((user) => {
+        //tidy up the user data
+      /*  return Object.assign(
+          {},
+          {
+            id: user.id,
+            email: user.email,
+            psw: user.psw,
+            name: user.name,
+            dept: user.dept,
+            roles: user.roles.map((roles) => {
+              //tidy up the role data
+              return Object.assign(
+                {},
+                {
+                  Role_name: roles.name,
+                }
+              );
+            }),
+          }
+        );  */
+    //  });
+    //  res.json(resObj); 
+
+      res.send(data);
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message:
+          err.message ||
+          "Some error occurred while retrieving Users Order by createdAt DESC.",
+      });
     });
-  });
 
 
 }
+
+//For Autherization 
+
+exports.allAccess = (req, res) => {
+  res.status(200).send("Public Content.");
+};
+
+exports.fecultyorstudentBoard = (req, res) => {
+  res.status(200).send("Feculty or Student Content.");
+};
+
+exports.librarianBoard = (req, res) => {
+  res.status(200).send("Librarian Content.");
+};
+

@@ -22,7 +22,7 @@ db.sequelize = sequelize;
 //Database Tables
 db.books = require("./books.model.js")(sequelize, Sequelize);
 db.users = require("./users.model.js")(sequelize, Sequelize);
-db.role = require("../models/role.model.js")(sequelize, Sequelize);
+db.role = require("./role.model.js")(sequelize, Sequelize);
 
 
 //Relation Table

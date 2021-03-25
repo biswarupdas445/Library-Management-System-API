@@ -1,35 +1,63 @@
-module.exports = app => {
-    const users = require("../controllers/users.controller.js");
-  
-    var router = require("express").Router();
-  
-    // Create a new User
-    router.post("/", users.create);
-  
-    // Retrieve all Users
-    router.get("/", users.findAll);
-  
-   
-  
-    // Retrieve a single User with id
-    router.get("/:id", users.findOne);
-  
-    // Update a User with id
-    router.put("/:id", users.update);
-  
-    // Delete a User with id
-    router.delete("/:id", users.delete);
-  
-    // Delete All Users a new Book
-    router.delete("/", users.deleteAll);
+const { authJwt } = require("../middleware");
+const users = require("../controllers/users.controller");
 
-    // Retrieve all Users order by name asc
-    router.get("/name/asc", users.findAllOrderByNameAsc);
+module.exports = function (app) {
 
+  app.use(function (req, res, next) {
+    res.header(
+      "Access-Control-Allow-Headers",
+      "x-access-token, Origin, Content-Type, Accept"
+    );
+    next();
+  });
+  // const users = require("../controllers/users.controller.js");
 
-    // Retrieve all Users order by createdAt DESC
-    router.get("/reg/desc", users.findAllOrderBycreatedAtDesc);
+ // var router = require("express").Router();
+
+  // Create a new User
+  app.post("/api/users", users.create);
+
+  // Retrieve all Users
+  app.get("/api/users", users.findAll);
+
+  // Retrieve a single User with id
+  app.get("/api/users/:id", users.findOne);
+
+  // Update a User with id
+  app.put("/api/users/:id", users.update);
+
+  // Delete a User with id
+  app.delete("/api/users/:id", users.delete);
+
+  // Delete All Users
+  app.delete("/api/users", users.deleteAll);
+
+  // Retrieve all Users order by name asc
+  app.get("/api/users/name/asc", users.findAllOrderByNameAsc);
+
+  // Retrieve all Users order by createdAt DESC
+  app.get("/api/users/reg/desc", users.findAllOrderBycreatedAtDesc);
+
+  // app.use("/api/users", router);
+
+  // For Autherization
 
   
-    app.use('/api/users', router);
-  };
+
+  app.get("/api/test/all", users.allAccess);
+
+  //  app.get("/api/test/student", [authJwt.verifyToken], users.studentBoard);
+
+  app.get(
+    "/api/test/StudentorFeculty",
+    [authJwt.verifyToken, authJwt.isFacultyOrStudent],
+    users.fecultyorstudentBoard
+  );
+
+  app.get(
+    "/api/test/Librarian",
+    [authJwt.verifyToken, authJwt.isLibrarian],
+    users.librarianBoard
+  );
+  
+};
