@@ -10,7 +10,7 @@ A Library Management System Rest API Nodejs Express Server.
 ## Database Schema
 
 ### Link to the Schema Design
-    > [https://app.dbdesigner.net/designer/schema/405314](https://app.dbdesigner.net/designer/schema/405314)
+> [https://app.dbdesigner.net/designer/schema/405314](https://app.dbdesigner.net/designer/schema/405314)
 
 
 ### Schema Simplified
