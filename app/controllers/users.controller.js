@@ -74,7 +74,7 @@ exports.findAll = (req, res) => {
   if(req.query.role)
   {
     const role = req.query.role;
-    var condition = role ? { role: { [Op.iLike]: `%${role}%` } } : null;  //Have to Check
+    var condition = role.name ? { role: { [Op.iLike]: `%${role}%` } } : null;  //Have to Check
   }
   
 
