@@ -8,7 +8,11 @@ A Library Management System Rest API Nodejs Express Server.
 * jsonwebtoken
 * bcryptjs
 ## Database Schema
+
 ### Link to the Schema Design
+https://app.dbdesigner.net/designer/schema/405314 - automatic!
+[GitHub](http://github.com)
+
 
 ### Schema Simplified
 
@@ -28,8 +32,8 @@ A Library Management System Rest API Nodejs Express Server.
 1. Configure Variables
 2. Build and Run Docker Images
 3. Manage Instances (Optional)
-   3. Start Instances
-   3. Stop Instances
+    3.1. Start Instances
+    3.2. Stop Instances
 
 ## Application Routes
 There are four different routes available in this application as follows.

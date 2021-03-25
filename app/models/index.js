@@ -29,6 +29,29 @@ db.payments = require("./payments.model.js")(sequelize, Sequelize);
 
 
 //Relation Table
+db.users.hasMany(db.records, {
+  foreignKey: {
+    name: "userId",
+    allowNull: false
+  }
+});
+
+db.users.hasMany(db.payments, {
+  foreignKey: {
+    name: "userId",
+    allowNull: false
+  }
+});
+
+db.records.hasMany(db.books, {
+  foreignKey: {
+    name: "ISBN",
+    allowNull: false,
+  },
+});
+
+
+
 db.role.belongsToMany(db.users, {
   through: "user_roles",
   foreignKey: "roleId",
