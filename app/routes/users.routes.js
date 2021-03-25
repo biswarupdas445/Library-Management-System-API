@@ -2,7 +2,6 @@ const { authJwt } = require("../middleware");
 const users = require("../controllers/users.controller");
 
 module.exports = function (app) {
-
   app.use(function (req, res, next) {
     res.header(
       "Access-Control-Allow-Headers",
@@ -12,7 +11,7 @@ module.exports = function (app) {
   });
   // const users = require("../controllers/users.controller.js");
 
- // var router = require("express").Router();
+  // var router = require("express").Router();
 
   // Create a new User
   app.post("/api/users", users.create);
@@ -42,22 +41,22 @@ module.exports = function (app) {
 
   // For Autherization
 
-  
-
+  //Autherization for All others
   app.get("/api/test/all", users.allAccess);
 
   //  app.get("/api/test/student", [authJwt.verifyToken], users.studentBoard);
 
+  //Autherization for All Students and Feculty
   app.get(
     "/api/test/StudentorFeculty",
     [authJwt.verifyToken, authJwt.isFacultyOrStudent],
     users.fecultyorstudentBoard
   );
 
+  //Autherization for All Librarian
   app.get(
     "/api/test/Librarian",
     [authJwt.verifyToken, authJwt.isLibrarian],
     users.librarianBoard
   );
-  
 };
