@@ -15,6 +15,14 @@ A Library Management System Rest API Nodejs Express Server.
 
 ### Schema Simplified
 
+**`Users`** table
+- `id` int unique AI PK
+- `email` (P1, P2, ...) unique secondary string
+- `name` string
+- `dept` double
+- `createdAt` timestamp with timezone
+- `updatedAt` timestamp with timezone
+
 ### Relation Between Tables
 
 ## Installation
