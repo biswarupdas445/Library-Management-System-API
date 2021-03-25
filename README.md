@@ -15,13 +15,52 @@ A Library Management System Rest API Nodejs Express Server.
 
 ### Schema Simplified
 
+**`user_roles`** table
+- `createdAt` timestamp with timezone
+- `updatedAt` timestamp with timezone
+- `roleId` int (foreign key, refers to roles.id)
+- `usersId` int (foreign key, refers to Users.id)
+
 **`Users`** table
 - `id` int unique AI PK
 - `email` (P1, P2, ...) unique secondary string
-- `name` string
-- `dept` double
+- `name` varchar
+- `dept` varchar
 - `createdAt` timestamp with timezone
 - `updatedAt` timestamp with timezone
+
+**`records`** table
+- `id` int unique AI PK
+- `userId` int (foreign key, refers to Users.id)
+- `userEmail` varchar
+- `ISBN` string (foreign key, refers to books.id)
+- `Operation` varchar
+- `createdAt` timestamp with timezone
+- `updatedAt` timestamp with timezone
+
+**`payments`** table
+- `id` int unique AI PK
+- `userId` int (foreign key, refers to Users.id)
+- `userEmail` varchar
+- `payAmt` float
+- `Status` varchar
+- `createdAt` timestamp with timezone
+- `updatedAt` timestamp with timezone
+
+**`books`** table
+- `id` int unique AI PK
+- `ISBN` varchar (P1, P2, ...) unique secondary string
+- `name` varchar
+- `subject` varchar
+- `auther` varchar
+- `copyNo` integer
+- `createdAt` timestamp with timezone
+- `updatedAt` timestamp with timezone
+
+
+
+
+
 
 ### Relation Between Tables
 
