@@ -1,2 +1,3 @@
 # Library-Management-System-API
-Node.js Rest Apis with Express, Sequelize &amp; PostgreSQL.
+A Library Management System Rest API Nodejs Express Server.
+### Used Technologies
