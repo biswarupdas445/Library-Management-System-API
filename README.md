@@ -61,7 +61,7 @@ A Library Management System Rest API Nodejs Express Server.
 
 Entities | Relationship
 --- | ---
-Users : roles | n : n through user_roles
+Users : roles | n : n | through user_roles
 lot : gateway | 1 : 1
 bay : sensor | 1 : 1
 sensor : status | 1 : n
