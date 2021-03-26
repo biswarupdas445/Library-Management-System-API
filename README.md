@@ -88,6 +88,11 @@ we're only dealing with the live occupancy staus.
 
 ## Installation
 
+#### 1. Configure Variables
+
+Variables like listening port, pgsql database credentials can be configured in `/app/config/db.config.js`
+
+
 ### In Regular Environment
 
 1. Configure Variables
