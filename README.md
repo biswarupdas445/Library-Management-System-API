@@ -83,7 +83,7 @@ we're only dealing with the live occupancy staus.
 
 
 ### Relation Between Tables
-![Librery Management System Schema](schema.png)
+![Librery Management System Schema](LMSA-APP-Schema.png)
 
 
 ## Installation
