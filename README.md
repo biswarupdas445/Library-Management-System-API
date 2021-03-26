@@ -61,16 +61,29 @@ A Library Management System Rest API Nodejs Express Server.
 
 Entities | Relationship
 --- | ---
-Users : roles | n : n | through user_roles
-lot : gateway | 1 : 1
-bay : sensor | 1 : 1
-sensor : status | 1 : n
+Users : roles | n : n through user_roles
+Users : payments | 1 : n
+Users : records | 1 : n
+records : books | n : n
 
 
+#### Note
+
+- Not The Currect Note 
+- `occupancy_status` can be present in **sensor** table as well as in **status** table.
+- If we store `occupancy_status` in the **status** table, it refers to status at certain timestamp.
+- If we store `occupancy_status` in the **sensor** table, it refers to the current status.
+- If not present in **status** table, we don't get status history. But it's ok as
+we're only dealing with the live occupancy staus.
+- `sensor.is_occupied` refers to the current/live status of a sensor.
+- `status.is_occupied` refers to status of a particular sensor at certain timestamp.
+- In the table **bay**, `name + lot_id` is UNIQUE.
+- In the table **lot**, `gateway_id` is UNIQUE.
 
 
 
 ### Relation Between Tables
+![Librery Management System Schema](/schema.png)
 
 
 ## Installation
