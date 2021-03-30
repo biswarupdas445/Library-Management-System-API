@@ -88,21 +88,45 @@ we're only dealing with the live occupancy staus.
 
 ## Installation
 
+
+
+
+### In Regular Environment
+
 #### 1. Configure Variables
 
 Variables like listening port, pgsql database credentials can be configured in `/app/config/db.config.js`
 
 
-### In Regular Environment
 
-1. Configure Variables
-2. Import MySQL Database
-3. Import Dependencies
-4. Starting the Server
+#### 2. Import PgSQL Database   
+Not Compleated
+
+```pgsql
+mysql -u root -p smart_parking_distronix < ./schema/smart_parking_distronix.sql
+```
+
+#### 3. Import Dependencies
+
+Use the following command to install all dependencies required for this project.
+
+```sh
+npm install
+```
+#### 4. Starting the Server
+
+Start the server using the following command
+
+```sh
+npm run start
+```
 
 ### In Docker Environment
 
-1. Configure Variables
+#### 1. Configure Variables
+
+Variables like listening port, pgsql database credentials can be configured in `/app/config/db.config.js`
+
 2. Build and Run Docker Images
 3. Manage Instances (Optional)
     3.1. Start Instances

@@ -26,7 +26,7 @@ db.role = require("./role.model.js")(sequelize, Sequelize);
 db.records = require("./records.model.js")(sequelize, Sequelize);
 db.payments = require("./payments.model.js")(sequelize, Sequelize);
 
-
+/*
 
 //Relation Table
 db.users.hasMany(db.records, {
@@ -49,6 +49,8 @@ db.records.hasMany(db.books, {
     allowNull: false,
   },
 });
+
+*/
 
 
 
