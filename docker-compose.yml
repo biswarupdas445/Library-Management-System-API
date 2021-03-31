@@ -46,6 +46,17 @@ services:
       PORT: 8080
     ports:
       - "8080:8080"
+  
+
+  nginx:
+    restart: always
+    build:
+        context: ./nginx
+    ports:
+        - "80:80"
+    depends_on:
+      - lsma-app
+  
 volumes:
     db-data:
     pgadmin-data:
